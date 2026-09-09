@@ -20,7 +20,15 @@ router.get("/", async (req, res) => {
 // Get one right by ID
 router.get("/:id", async (req, res) => {
   try {
-    const right = await Right.findById(req.params.id);
+    const { title, category, description } = req.body;
+
+if (!title || !category || !description) {
+  return res.status(400).json({
+    message: "Title, category and description are required"
+  });
+}
+
+const right = await Right.create(req.body);
 
     if (!right) {
       return res.status(404).json({

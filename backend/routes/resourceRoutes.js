@@ -20,7 +20,15 @@ router.get("/", async (req, res) => {
 // Get one resource by ID
 router.get("/:id", async (req, res) => {
   try {
-    const resource = await Resource.findById(req.params.id);
+   const { title, type, description, category } = req.body;
+
+if (!title || !type || !description || !category) {
+  return res.status(400).json({
+    message: "Title, type, description and category are required"
+  });
+}
+
+const resource = await Resource.create(req.body);
 
     if (!resource) {
       return res.status(404).json({
