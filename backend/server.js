@@ -7,6 +7,13 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+const authRoutes = require("./routes/authRoutes");
+const rightRoutes = require("./routes/rightRoutes");
+const resourceRoutes = require("./routes/resourceRoutes");
+
+app.use("/api/auth", authRoutes);
+app.use("/api/rights", rightRoutes);
+app.use("/api/resources", resourceRoutes);
 
 app.get("/", (req, res) => {
   res.json({
