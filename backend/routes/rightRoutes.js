@@ -38,3 +38,20 @@ router.get("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+// Create a new right
+router.post("/", async (req, res) => {
+  try {
+    const right = await Right.create(req.body);
+
+    res.status(201).json({
+      message: "Right created successfully",
+      right
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Failed to create right",
+      error: error.message
+    });
+  }
+});

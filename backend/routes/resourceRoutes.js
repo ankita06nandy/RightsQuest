@@ -38,3 +38,20 @@ router.get("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+// Create a new resource
+router.post("/", async (req, res) => {
+  try {
+    const resource = await Resource.create(req.body);
+
+    res.status(201).json({
+      message: "Resource created successfully",
+      resource
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Failed to create resource",
+      error: error.message
+    });
+  }
+});
