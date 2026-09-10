@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
+
 const app = express();
 
 app.use(cors());
@@ -10,10 +11,14 @@ app.use(express.json());
 const authRoutes = require("./routes/authRoutes");
 const rightRoutes = require("./routes/rightRoutes");
 const resourceRoutes = require("./routes/resourceRoutes");
+const progressRoutes = require("./routes/progressRoutes");
+const questRoutes = require("./routes/questRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/rights", rightRoutes);
 app.use("/api/resources", resourceRoutes);
+app.use("/api/quests", questRoutes);
+app.use("/api/progress", progressRoutes);
 
 app.get("/", (req, res) => {
   res.json({

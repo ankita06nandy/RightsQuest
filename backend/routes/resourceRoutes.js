@@ -45,8 +45,6 @@ const resource = await Resource.create(req.body);
   }
 });
 
-module.exports = router;
-
 // Create a new resource
 router.post("/", async (req, res) => {
   try {
@@ -63,3 +61,5 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
+module.exports = router;

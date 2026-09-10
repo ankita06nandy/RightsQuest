@@ -45,8 +45,6 @@ const right = await Right.create(req.body);
   }
 });
 
-module.exports = router;
-
 // Create a new right
 router.post("/", async (req, res) => {
   try {
@@ -63,3 +61,5 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
+module.exports = router;
