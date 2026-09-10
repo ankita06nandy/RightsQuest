@@ -5,58 +5,58 @@ const questSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
 
     category: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
 
     difficulty: {
       type: String,
       enum: ["Easy", "Medium", "Hard"],
-      default: "Easy"
+      default: "Easy",
     },
 
     scenario: {
       type: String,
-      required: true
+      required: true,
     },
 
     options: [
       {
         text: {
           type: String,
-          required: true
+          required: true,
         },
 
         isCorrect: {
           type: Boolean,
-          required: true
-        }
-      }
+          required: true,
+        },
+      },
     ],
 
     explanation: {
       type: String,
-      required: true
+      required: true,
     },
 
     xp: {
       type: Number,
-      default: 10
+      default: 10,
     },
 
     relatedRights: [
       {
-        type: String
-      }
-    ]
+        type: String,
+      },
+    ],
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
