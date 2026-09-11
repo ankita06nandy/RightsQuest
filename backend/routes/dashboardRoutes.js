@@ -1,4 +1,3 @@
-// dashboardroutes.js
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
@@ -15,7 +14,9 @@ router.get("/:userId", async (req, res) => {
 
     // Fetch quests from database to build recommendations dynamically
     const quests = await Quest.find().limit(4);
-    const recommendations = quests.map(q => ${q.title} (${q.difficulty || 'Easy'}));
+    
+    // String concatenation avoiding backtick issues
+    const recommendations = quests.map(q => q.title + " (" + (q.difficulty || "Easy") + ")");
 
     const userLevel = Math.floor(user.xp / 100) + 1;
 

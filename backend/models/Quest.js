@@ -16,4 +16,4 @@ const questSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Quest', questSchema);
+module.exports = mongoose.models.Quest || mongoose.model('Quest', questSchema);

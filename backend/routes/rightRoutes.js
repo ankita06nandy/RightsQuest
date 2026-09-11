@@ -1,4 +1,4 @@
-/ RightsRoutes.js
+//rightRoutes.js
 const express = require("express");
 const router = express.Router();
 const Right = require("../models/Right");

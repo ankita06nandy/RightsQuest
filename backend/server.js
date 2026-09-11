@@ -1,25 +1,29 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/rightsquest';
-
+// Database connection
 mongoose
-  .connect(MONGO_URI)
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/rightsquest")
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log("DB Connection Error:", err));
 
-// Routes
-app.use('/api/quests', require('./routes/questRoutes'));
-app.use('/api/auth', require('./routes/authRoutes')); // 👈 Added Auth Routes
+// Route Handlers
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/dashboard", require("./routes/dashboardRoutes"));
+app.use("/api/progress", require("./routes/progressRoutes"));
+app.use("/api/quests", require("./routes/questRoutes"));
+app.use("/api/resources", require("./routes/resourceRoutes"));
+app.use("/api/rights", require("./routes/rightRoutes"));
+
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

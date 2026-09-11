@@ -1,7 +1,7 @@
 // backend/routes/questRoutes.js
 const express = require('express');
 const router = express.Router();
-const Quest = require('../models/Quest');
+const Quest = require("../models/Quest");
 
 // ❌ WRONG: router.get('/api/quests', ...)  <-- Do NOT repeat /api/quests here!
 // ✅ CORRECT:
