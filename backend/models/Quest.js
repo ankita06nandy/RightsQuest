@@ -1,63 +1,19 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const questSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    category: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    difficulty: {
-      type: String,
-      enum: ["Easy", "Medium", "Hard"],
-      default: "Easy",
-    },
-
-    scenario: {
-      type: String,
-      required: true,
-    },
-
-    options: [
-      {
-        text: {
-          type: String,
-          required: true,
-        },
-
-        isCorrect: {
-          type: Boolean,
-          required: true,
-        },
-      },
-    ],
-
-    explanation: {
-      type: String,
-      required: true,
-    },
-
-    xp: {
-      type: Number,
-      default: 10,
-    },
-
-    relatedRights: [
-      {
-        type: String,
-      },
-    ],
+    title: String,
+    category: String,
+    difficulty: String,
+    scenario: String,
+    correctAnswer: String,
+    explanation: String,
+    xp: Number,
+    relatedRight: String
   },
-  {
-    timestamps: true,
+  { 
+    strict: false // Allows dynamic fields like "Option 1" to bypass Mongoose filters
   }
 );
 
-module.exports = mongoose.model("Quest", questSchema);
+module.exports = mongoose.model('Quest', questSchema);
