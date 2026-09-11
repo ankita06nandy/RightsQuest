@@ -33,6 +33,11 @@ router.get("/:userId", async (req, res) => {
 router.post("/complete", async (req, res) => {
   try {
     const { userId, questId, score } = req.body;
+    if (score !== undefined && (score < 0 || score > 1)) {
+  return res.status(400).json({
+    message: "Score must be 0 or 1"
+  });
+}
 
     if (!userId || !questId) {
       return res.status(400).json({
