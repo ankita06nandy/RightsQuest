@@ -1,16 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-// Example: import your models or services
-// const Progress = require("../models/Progress");
-// const Quest = require("../models/Quest");
-// const Resource = require("../models/Resource");
-
 router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Mock data for now — replace with DB queries later
     const progress = {
       level: 4,
       xp: 750,
