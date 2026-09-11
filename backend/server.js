@@ -1,42 +1,25 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-require("dotenv").config();
-
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-const authRoutes = require("./routes/authRoutes");
-const rightRoutes = require("./routes/rightRoutes");
-const resourceRoutes = require("./routes/resourceRoutes");
-const progressRoutes = require("./routes/progressRoutes");
-const questRoutes = require("./routes/questRoutes");
 
-app.use("/api/auth", authRoutes);
-app.use("/api/rights", rightRoutes);
-app.use("/api/resources", resourceRoutes);
-app.use("/api/quests", questRoutes);
-app.use("/api/progress", progressRoutes);
-
-app.get("/", (req, res) => {
-  res.json({
-    message: "RightsQuest backend is running!"
-  });
-});
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/rightsquest';
 
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB connected successfully!");
+  .connect(MONGO_URI)
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
-    const PORT = process.env.PORT || 5000;
+// Routes
+app.use('/api/quests', require('./routes/questRoutes'));
+app.use('/api/auth', require('./routes/authRoutes')); // 👈 Added Auth Routes
 
-    app.listen(PORT, () => {
-      console.log(`RightsQuest server running on http://localhost:${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error("MongoDB connection failed:", error.message);
-  });
+app.listen(PORT, () => {
+  console.log(`Backend running on http://localhost:${PORT}`);
+});

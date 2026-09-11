@@ -1,47 +1,47 @@
+// dashboardroutes.js
 const express = require("express");
 const router = express.Router();
-
-// Example: import your models or services
-// const Progress = require("../models/Progress");
-// const Quest = require("../models/Quest");
-// const Resource = require("../models/Resource");
+const User = require("../models/User");
+const Quest = require("../models/Quest");
 
 router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Mock data for now — replace with DB queries later
-    const progress = {
-      level: 4,
-      xp: 750,
-      totalXp: 1000,
-      lessons: 12,
-      scenarios: 8,
-      badges: 4,
-      points: 120,
-    };
+    let user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    const modules = [
-      { title: "Know Your Rights", description: "Learn about disability laws, rights, and policies", progress: 100 },
-      { title: "Real-life Scenarios", description: "Explore obstacles and find solutions", progress: 80 },
-      { title: "Take Action", description: "Learn how to advocate and make informed choices", progress: 40 },
-      { title: "Community Stories", description: "Read stories from others and share experiences", progress: 20 },
-    ];
+    // Fetch quests from database to build recommendations dynamically
+    const quests = await Quest.find().limit(4);
+    const recommendations = quests.map(q => ${q.title} (${q.difficulty || 'Easy'}));
 
-    const recommendations = [
-      "Denied Bus Access (Intermediate)",
-      "Exam Accommodation (Beginner)",
-      "Workplace Discrimination (Advanced)",
-      "Digital Inaccessibility (Intermediate)"
-    ];
+    const userLevel = Math.floor(user.xp / 100) + 1;
 
     res.json({
-      ...progress,
-      modules,
-      recommendations,
+      level: userLevel,
+      xp: user.xp,
+      totalXp: userLevel * 1000,
+      lessons: 12,
+      scenarios: quests.length,
+      badges: 4,
+      points: user.xp,
+      modules: [
+        { title: "Know Your Rights", description: "Learn about disability laws, rights, and policies", progress: 75 },
+        { title: "Real-life Scenarios", description: "Explore obstacles and find solutions", progress: 60 },
+        { title: "Take Action", description: "Learn how to advocate and make informed choices", progress: 40 },
+        { title: "Community Stories", description: "Read stories from others and share experiences", progress: 20 },
+      ],
+      recommendations: recommendations.length > 0 ? recommendations : [
+        "Denied Bus Access (Easy)",
+        "Exam Accommodation (Medium)",
+        "Workplace Discrimination (Hard)",
+        "Digital Inaccessibility (Medium)"
+      ]
     });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching dashboard data" });
+    res.status(500).json({ message: "Error fetching dashboard data", error: err.message });
   }
 });
 
